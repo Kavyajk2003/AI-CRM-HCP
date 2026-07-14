@@ -444,24 +444,20 @@ Open **http://localhost:5173** in your browser
 ## 🚨 Common Edge Cases & Solutions
 
 ### Edge Case 1: Doctor Not Found
-**Problem**: User mentions an unknown doctor
-**Solution**: AI auto-creates new HCP profile with provided name and defaults
+- **Problem**: User mentions an unknown doctor
+- **Solution**: AI auto-creates new HCP profile with provided name and defaults
 
 ### Edge Case 2: Multiple Interactions in One Session
-**Problem**: User logs multiple doctors without explicitly switching
-**Solution**: Tool checks conversation context and uses correct doctor name via `edit_latest_interaction` vs `log_interaction`
+- **Problem**: User logs multiple doctors without explicitly switching
+- **Solution**: Tool checks conversation context and uses correct doctor name via `edit_latest_interaction` vs `log_interaction`
 
 ### Edge Case 3: Vague User Input
-**Problem**: User enters "Tell me about Bob"
-**Solution**: Agent recognizes vague intent and asks clarifying questions instead of executing tools
+- **Problem**: User enters "Tell me about Bob"
+- **Solution**: Agent recognizes vague intent and asks clarifying questions instead of executing tools
 
 ### Edge Case 4: API Rate Limiting
-**Problem**: Groq API hits rate limit (429 error)
-**Solution**: Frontend catches error and displays "AI is at capacity" message with retry guidance
-
-### Edge Case 5: Sentiment Hallucination
-**Problem**: LLM generates non-standard sentiment value
-**Solution**: Python safety net in `get_next_best_action` supplements missing actions with defaults
+- **Problem**: Groq API hits rate limit (429 error)
+- **Solution**: Frontend catches error and displays "AI is at capacity" message with retry guidance
 
 ---
 
