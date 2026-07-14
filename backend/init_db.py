@@ -16,10 +16,11 @@ def init_db():
     if db.query(HCP).first() is None:
         print("Seeding dummy HCP data...")
         dummy_hcps = [
-            HCP(name="Dr. Smith", specialization="Cardiology", hospital="City General"),
-            HCP(name="Dr. John", specialization="Neurology", hospital="Metro Health"),
-            HCP(name="Dr. Emily Chen", specialization="Endocrinology", hospital="Westside Clinic")
+            HCP(name="Smith", profession="Doctor", specialization="Cardiology", hospital="City General"),
+            HCP(name="John", profession="Doctor", specialization="Neurology", hospital="Metro Health"),
+            HCP(name="Emily Chen", profession="Doctor", specialization="Endocrinology", hospital="Westside Clinic")
         ]
+        db.add_all(dummy_hcps)
         db.add_all(dummy_hcps)
         db.commit()
         print("Successfully seeded 3 HCPs.")

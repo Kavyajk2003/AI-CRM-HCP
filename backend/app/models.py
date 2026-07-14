@@ -9,7 +9,8 @@ class HCP(Base):
     __tablename__ = "hcps"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
+    name = Column(String, index=True)           # e.g., "Smith"
+    profession = Column(String)                 # e.g., "Doctor", "Pharmacist"
     specialization = Column(String)
     hospital = Column(String)
 
