@@ -59,7 +59,7 @@ function App() {
     }
 
     try {
-      const API_BASE = (process.env.REACT_APP_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
+      const API_BASE = (import.meta.env.REACT_APP_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
       const response = await axios.post(`${API_BASE}/chat`, {
         message: currentInput,
         thread_id: threadId
