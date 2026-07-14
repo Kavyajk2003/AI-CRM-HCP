@@ -11,7 +11,10 @@ app = FastAPI(title="AI-First CRM API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=[
+        "http://localhost:5173",
+        "https://ai-crm-hcp-ui.onrender.com/"
+    ],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
