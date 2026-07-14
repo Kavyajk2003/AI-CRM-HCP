@@ -67,11 +67,13 @@ def log_interaction(
         db.close()
 
 @tool
-def edit_latest_interaction(
-    hcp_name: str,
+def edit_latest_interaction(hcp_name: str,
     sentiment: str = None,
     follow_up: str = None,
-    outcomes: str = None
+    outcomes: str = None,
+    additional_notes: str = None,
+    additional_materials: str = None,
+    additional_samples: str = None
 ) -> str:
     """
     Mandatory Tool 2: Modify or ADD missing fields to the MOST RECENT interaction for a given HCP.
@@ -81,23 +83,44 @@ def edit_latest_interaction(
     IMPORTANT: Extract only the NAME of the doctor (e.g., pass 'Shan', not 'Dr. Shan').
     Only pass the fields that need to be changed or added.
     """
+    print(f"🚨 AI TRIGGERED edit_latest_interaction FOR: {hcp_name}")
     db = SessionLocal()
     try:
         hcp = db.query(HCP).filter(HCP.name.ilike(f"%{hcp_name}%")).first()
         if not hcp:
             return f"Error: Could not find {hcp_name}."
-
-        latest_interaction = db.query(Interaction).filter(Interaction.hcp_id == hcp.id).order_by(Interaction.created_at.desc()).first()
+        latest_interaction = db.query(Interaction).filter(Interaction.hcp_id == hcp.id).order_by(Interaction.id.desc()).first()
         
         if not latest_interaction:
             return f"Error: No interactions exist yet for {hcp.name}."
 
+        # Update standard fields
         if sentiment: latest_interaction.sentiment = sentiment
         if follow_up: latest_interaction.follow_up = follow_up
         if outcomes: latest_interaction.outcomes = outcomes
+        
+        # --- APPENDING LOGIC ---
+        if additional_notes:
+            if latest_interaction.discussion_notes:
+                latest_interaction.discussion_notes += f" | Also discussed: {additional_notes}"
+            else:
+                latest_interaction.discussion_notes = additional_notes
+                
+        if additional_materials:
+            if latest_interaction.materials_shared:
+                latest_interaction.materials_shared += f", {additional_materials}"
+            else:
+                latest_interaction.materials_shared = additional_materials
+                
+        if additional_samples:
+            if latest_interaction.samples_distributed:
+                latest_interaction.samples_distributed += f", {additional_samples}"
+            else:
+                latest_interaction.samples_distributed = additional_samples
 
         db.commit()
-        return f"Details updated successfully. AI INSTRUCTION: Stop thinking. Do not call any more tools. Reply to the user with EXACTLY this phrase: 'The interaction with {hcp.name} has been successfully updated.' and nothing else."
+        
+        return f"Database updated successfully. AI INSTRUCTION: Stop thinking. Do not call any more tools. Reply to the user with EXACTLY this phrase: 'The interaction with {hcp.name} has been successfully updated.' and nothing else."
     finally:
         db.close()
 
@@ -180,7 +203,7 @@ def get_next_best_action(hcp_name: str) -> str:
         # Initialize a lightweight LLM specifically for the analysis
         llm = ChatGroq(
             api_key=os.getenv("GROQ_API_KEY"),
-            model="llama-3.1-8b-instant",
+            model="openai/gpt-oss-20b",
             temperature=0
         )
         
@@ -297,7 +320,7 @@ def generate_follow_up_email(hcp_name: str) -> str:
         # 4. Generate the Email Draft using a new LLM call
         llm = ChatGroq(
             api_key=os.getenv("GROQ_API_KEY"),
-            model="llama-3.1-8b-instant",
+            model="openai/gpt-oss-20b",
             temperature=0.4 # A bit of temperature for natural writing
         )
         

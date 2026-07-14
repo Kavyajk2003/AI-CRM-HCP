@@ -11,7 +11,7 @@ load_dotenv()
 # Initialize the Groq LLM specified in your requirements
 llm = ChatGroq(
     api_key=os.getenv("GROQ_API_KEY"),
-    model="llama-3.1-8b-instant",
+    model="openai/gpt-oss-20b",
     temperature=0.1, # Low temperature for accurate data extraction
     max_retries=2
 )
@@ -33,7 +33,7 @@ Your primary job is to log, edit, and retrieve interaction data using your tools
 
 CRITICAL INTENT ROUTING RULES:
 A. LOGGING (log_interaction): ONLY use this tool for a BRAND NEW meeting. **CRITICAL:** After using this tool, you MUST STOP. NEVER call `get_hcp_history` right after logging.
-B. UPDATING/EDITING (edit_latest_interaction): Use this tool if the user is ADDING missing information... [keep rest the same]
+B. UPDATING/EDITING (edit_latest_interaction): Use this tool if the user is ADDING missing information (like sentiment, outcomes, follow-up dates, or ADDITIONAL notes/samples/products) to a meeting that was ALREADY logged. **CRITICAL:** Even if the user starts their sentence with "When I spoke with them today..." or "I also discussed...", you MUST use `edit_latest_interaction`, NOT `log_interaction`.
 C. RETRIEVING (get_hcp_history): ONLY use this tool if the user explicitly asks to see past data (e.g., "show me history"). NEVER use this tool to verify your own work.
 D. NEXT BEST ACTION (get_next_best_action): Use this tool ONLY when the user explicitly asks for a recommendation, suggestion, or "next best action" for a specific doctor.
 E. KNOWLEDGE BASE (get_product_info): Use this tool ONLY when the user explicitly asks for details, dosage, indications, or evidence about a specific product or drug.
@@ -56,11 +56,11 @@ CRITICAL RULES:
 14. NO INTERNAL MONOLOGUE: NEVER output your internal reasoning or tool selection logic to the user (e.g., "The user did not ask for...", "The user has already asked..."). Just output the final professional confirmation.
 
 SENTIMENT VALIDATION RULE:
-When extracting sentiment, you MUST map the user's emotion to EXACTLY one of these three strings: "Positive", "Negative", or "Neutral". 
-- If the user says "happy", "interested", "good", map to "Positive".
-- If the user says "worried", "concerned", "bad", map to "Negative".
-- If the user says "okay", "busy", "neutral", map to "Neutral".
-NEVER use any other words for the sentiment field.
+The AI is responsible for analyzing the user's input and identifying the sentiment. 
+- You should dynamically detect the user's emotion (e.g., "Positive", "Negative", "Neutral").
+- Do not constrain yourself to a pre-defined list.
+- Extract the sentiment naturally based on the tone of the user's words.
+- Pass this string directly to the tools.
 """
 
 # Compile the LangGraph agent

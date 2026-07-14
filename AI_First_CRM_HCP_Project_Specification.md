@@ -28,7 +28,7 @@ filling forms.
 -   LangGraph (Mandatory)
 -   Groq API
     -   Primary Model: `gemma2-9b-it`
-    -   Optional: `llama-3.3-70b-versatile`
+    -   Optional: `openai/gpt-oss-20b`
 
 ## Database
 
