@@ -13,7 +13,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://ai-crm-hcp-ui.onrender.com/"
+        "https://ai-crm-hcp-ui.onrender.com"
     ],
     allow_credentials=False,
     allow_methods=["*"],
