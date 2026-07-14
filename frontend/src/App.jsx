@@ -12,8 +12,8 @@ const FormField = ({ label, icon: Icon, value, isTextArea = false }) => (
       <Icon size={14} /> {label}
     </label>
     <div className={`p-3 rounded-lg border transition-colors ${isTextArea ? 'min-h-[80px]' : ''} ${value
-        ? 'bg-indigo-50 border-indigo-200 text-indigo-900 dark:bg-indigo-900/30 dark:border-indigo-800/50 dark:text-indigo-200 font-medium'
-        : 'bg-gray-50 border-gray-200 text-gray-400 dark:bg-gray-800/50 dark:border-gray-700 dark:text-gray-500 italic'
+      ? 'bg-indigo-50 border-indigo-200 text-indigo-900 dark:bg-indigo-900/30 dark:border-indigo-800/50 dark:text-indigo-200 font-medium'
+      : 'bg-gray-50 border-gray-200 text-gray-400 dark:bg-gray-800/50 dark:border-gray-700 dark:text-gray-500 italic'
       }`}>
       {value || 'Waiting for AI...'}
     </div>
@@ -59,7 +59,8 @@ function App() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/chat', {
+      const API_BASE = (process.env.REACT_APP_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
+      const response = await axios.post(`${API_BASE}/chat`, {
         message: currentInput,
         thread_id: threadId
       }, {
@@ -228,7 +229,7 @@ function App() {
                       )}
                     </div>
                     <div className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium ${meeting.sentiment?.toLowerCase() === 'positive' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
-                        meeting.sentiment?.toLowerCase() === 'negative' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'
+                      meeting.sentiment?.toLowerCase() === 'negative' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'
                       }`}>
                       <span>{meeting.sentiment?.toUpperCase() || 'Neutral'}</span>
                       <span>{meeting.sentiment?.toLowerCase() === 'positive' ? '😊' : meeting.sentiment?.toLowerCase() === 'negative' ? '😞' : '😐'}</span>
@@ -357,8 +358,8 @@ function App() {
                 placeholder={isRecording ? "Listening..." : "Type or speak your message... (Shift + Enter for new line)"}
                 rows={1}
                 className={`w-full p-4 pr-12 bg-gray-50 dark:bg-gray-800 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 resize-none overflow-y-auto transition-colors text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${isRecording
-                    ? 'border-red-300 dark:border-red-500/50 bg-red-50/30 dark:bg-red-900/20'
-                    : 'border-gray-200 dark:border-gray-700'
+                  ? 'border-red-300 dark:border-red-500/50 bg-red-50/30 dark:bg-red-900/20'
+                  : 'border-gray-200 dark:border-gray-700'
                   }`}
                 style={{ minHeight: '56px' }}
                 disabled={loading}
