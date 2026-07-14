@@ -17,7 +17,7 @@ class HCPResponse(HCPBase):
 
 class InteractionDraft(BaseModel):
     hcp_name: str = Field(description="Name of the Healthcare Professional")
-    interaction_type: Optional[str] = Field(default="In-Person", description="Type of meeting")
+    interaction_type: Optional[str] = Field(default=None, description="Type of meeting")
     discussion_notes: Optional[str] = Field(default=None, description="Main topics discussed")
     materials_shared: Optional[str] = Field(default=None, description="Brochures, PDFs, or links shared")
     samples_distributed: Optional[str] = Field(default=None, description="Physical medicine samples given out")

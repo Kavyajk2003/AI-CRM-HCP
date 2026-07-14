@@ -33,3 +33,14 @@ class Interaction(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     hcp = relationship("HCP", back_populates="interactions")
+
+class Product(Base):
+    __tablename__ = "products"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True)
+    details = Column(Text)
+    indications = Column(Text)
+    benefits = Column(Text)
+    dosage = Column(String)
+    clinical_evidence = Column(Text)
