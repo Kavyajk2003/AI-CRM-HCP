@@ -154,6 +154,8 @@ log_interaction(
     follow_up="Schedule follow-up next week"
 )
 ```
+<img width="1512" height="904" alt="Screenshot 2026-07-15 at 10 10 23 PM" src="https://github.com/user-attachments/assets/cce2148e-3cfe-436e-a7d4-0b4ed897cdb7" />
+
 
 #### Tool 2: **Edit Latest Interaction** ✏️
 Modifies or enriches the most recent interaction without re-logging.
@@ -164,6 +166,7 @@ edit_latest_interaction(
     sentiment="Negative"  # Updates only this field
 )
 ```
+<img width="1504" height="904" alt="Image" src="https://github.com/user-attachments/assets/6f16abf1-773c-4185-b1d6-aab6f13d78d0" />
 
 #### Tool 3: **Get HCP History** 📊
 Retrieves the last 3 interactions for an HCP.
@@ -171,12 +174,16 @@ Retrieves the last 3 interactions for an HCP.
 # User: "Show me Smith's previous interactions"
 get_hcp_history(hcp_name="Smith", show_on_ui=True)
 ```
+<img width="1507" height="898" alt="Screenshot 2026-07-15 at 10 11 38 PM" src="https://github.com/user-attachments/assets/32ff0d31-9e69-4d3c-88a6-c8b501cca060" />
+
 
 #### Tool 4: **Get Next Best Action** 🎯
 AI analyzes the latest interaction and recommends 3 contextual next steps.
 ```python
 # Outputs: "Schedule follow-up|Send clinical trial data|Provide samples"
 ```
+<img width="1503" height="902" alt="Screenshot 2026-07-15 at 10 12 31 PM" src="https://github.com/user-attachments/assets/575fb383-eb57-4a2e-8121-6028f51f1d96" />
+
 
 #### Tool 5: **Get Product Information** 💊
 Retrieves clinical details about pharmaceutical products.
@@ -185,6 +192,8 @@ Retrieves clinical details about pharmaceutical products.
 get_product_info(product_name="Product X")
 # Returns: Indications, benefits, dosage, clinical evidence
 ```
+<img width="1498" height="896" alt="Screenshot 2026-07-15 at 10 13 06 PM" src="https://github.com/user-attachments/assets/e8940c1c-b22f-44fb-87b2-2eeacdaf9ffa" />
+
 
 #### Tool 6: **Generate Follow-up Email** 📧
 Automatically drafts professional follow-up emails based on the interaction.
@@ -192,6 +201,7 @@ Automatically drafts professional follow-up emails based on the interaction.
 # Integrates with Tool 4 for contextual suggestions
 generate_follow_up_email(hcp_name="Smith")
 ```
+<img width="1490" height="860" alt="Screenshot 2026-07-15 at 10 33 54 PM" src="https://github.com/user-attachments/assets/64002938-b862-4332-aaf5-6d70d713f0ca" />
 
 ---
 
